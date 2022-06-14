@@ -9,7 +9,7 @@ export const Dashboard = () => {
   return (
     <div> 
          <div>
-        <Header />
+        <Header isDashboard={true} />
         <Banner />
         <div className='max-w-7xl mx-auto mt-10'>
           <GallerySection />
