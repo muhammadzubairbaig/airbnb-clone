@@ -7,7 +7,7 @@ import { OutsideDoors } from './OutsideDoors'
 
 export const Dashboard = () => {
   return (
-    <div>
+    <div> 
          <div>
         <Header />
         <Banner />

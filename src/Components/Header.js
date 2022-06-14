@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AirbnbLogo from '../assets/Airbnb_Logo.png'
 import {
     SearchIcon,
@@ -9,7 +9,7 @@ import { SearchFilter } from './SearchFilter'
 import { useNavigate, Link } from 'react-router-dom'
 import { format } from 'date-fns'
 
-export const Header = ({placeholder}) => {
+export const Header = ({ placeholder }) => {
     const [search, setSearch] = useState('');
     const [noOfGuest, setNoOfGuest] = useState(1);
     const navigate = useNavigate();
@@ -33,20 +33,36 @@ export const Header = ({placeholder}) => {
         setEndDate(e.selection.endDate);
     }
 
+    const [animated, setAnimated] = useState(false);
+    function handleScroll(e) {
+        const wScroll = window.scrollY;
+        if (wScroll >= 50) {
+            setAnimated(true);
+        } else {
+            setAnimated(false);
+        }
+        console.log(animated)
+    }
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll, true);
+    });
+
     return (
-        <header className="shadow-md p-5 fixed bg-white z-50 w-full  md:grid-cols-3
-        grid grid-flow-row-dense grid-cols-3">
+        <header
+            className={`p-5 fixed z-50 w-full md:grid-cols-3
+        grid grid-flow-row-dense grid-cols-3 ${animated ? `bg-white shadow-md  ease-out` : 'bg-transparent transition-none'}`}>
 
             <div className="items-center hidden md:inline-flex">
                 <Fade left>
                     <Link to='/'>
-                    <img src={AirbnbLogo} alt='airbnb logo' className="h-6 cursor-pointer md:h-10" /></Link>
+                        <img src={AirbnbLogo} alt='airbnb logo' className="h-6 cursor-pointer md:h-10" /></Link>
                 </Fade>
             </div>
-            <div className="flex border-2 rounded-full items-center md:shadow-sm py-2 col-span-2 md:col-span-1 hover:shadow-lg">
+            <div className="flex bg-white border-2 rounded-full items-center md:shadow-sm py-2 col-span-2 md:col-span-1 hover:shadow-lg">
                 <Fade top>
                     <input type="text" placeholder={placeholder || `Start type your search`}
-                    readOnly={placeholder || false}
+                        readOnly={placeholder || false}
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         className="outline-none bg-transparent md:pl-5 px-2 flex-grow text-gray-600 placeholder-gray-400" />
@@ -54,12 +70,13 @@ export const Header = ({placeholder}) => {
                 </Fade>
             </div>
             <div className="flex justify-end items-center">
-                <Fade right>
-                    <div className="text-gray-400 hidden md:inline-flex">Become a host</div>
-                    <GlobeAltIcon className="h-5 ml-3 text-gray-500" />
+                <Fade right >
+                    <div className={`hidden md:inline-flex ${animated ? `text-gray-400` : 'text-white'}`}
+                    >Become a host</div>
+                    <GlobeAltIcon className={`h-5 ml-3 ${animated ? `text-gray-400` : 'text-white'}`} />
                     <div className="flex rounded-full border-2 shadow-sm p-2 ml-3 hover:shadow-lg">
-                        <MenuIcon className='h-5 text-gray-500 cursor-pointer' />
-                        <UserCircleIcon className='h-5 text-gray-500 cursor-pointer' />
+                        <MenuIcon className={`h-5 cursor-pointer ${animated ? `text-gray-400` : 'text-white'}`} />
+                        <UserCircleIcon className={`h-5 cursor-pointer ${animated ? `text-gray-400` : 'text-white'}`} />
                     </div>
                 </Fade>
             </div>
@@ -74,7 +91,7 @@ export const Header = ({placeholder}) => {
                         <UserGroupIcon className='h-5' />
                         <input min={1} type="number"
                             value={noOfGuest} onChange={(e) => setNoOfGuest(e.target.value)}
-                             className='w-12 pl-2 text-lg outline-none text-red-400' />
+                            className='w-12 pl-2 text-lg outline-none text-red-400' />
                     </div>
                     <div className="flex items-center justify-center">
                         <button className='primary-btn mx-2 flex-grow' onClick={resetFilters}> Cancel</button>
