@@ -1,4 +1,5 @@
 import React from 'react'
+import { Fade } from 'react-reveal'
 import { LargeCard } from './LargeCard'
 
 export const OutsideDoors = () => {
@@ -12,9 +13,11 @@ export const OutsideDoors = () => {
     ]
     return (
         <div className='mx-8 sm:mx-16'>
+            <Fade left>
             <div className=''>
                 {data.map(card => <LargeCard title={card.title} image={card.image} description={card.description} buttonText={card.buttonText}/>)}
             </div>
+            </Fade>
 
         </div>
     )

@@ -1,23 +1,20 @@
 import './App.css';
-import Banner from './Components/Banner';
+import { Route, Routes } from 'react-router-dom';
+import { SearchPage } from './Components/SearchPage';
+import { Dashboard } from './Components/Dashboard';
 import { Footer } from './Components/Footer';
-import { GallerySection } from './Components/GallerySection';
-import { Header } from './Components/Header';
-import { LocationSection } from './Components/LocationSection';
-import { OutsideDoors } from './Components/OutsideDoors';
 
 function App() {
   return (
-    <div>
-   <Header/>
-   <Banner/>
-   <div className='max-w-7xl mx-auto mt-10'>
-   <GallerySection/>
-   <LocationSection/> 
-   <OutsideDoors/>
-   </div>
-   <Footer/>
-    </div>
+    <>
+      <Routes>
+        <Route path='/' element={<Dashboard />} />
+        <Route path='/search' element={<SearchPage />} />
+      </Routes>
+      <Footer />
+
+    </>
+
   );
 }
 
