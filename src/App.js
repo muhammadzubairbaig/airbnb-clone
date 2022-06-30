@@ -1,21 +1,20 @@
-import { useState } from 'react';
 import './App.css';
-import { AppRoutes } from './Component/AppRoutes';
-import { Topbar } from './Layout/Topbar/Topbar';
-import { routeConstantsService } from './Routes/Routes';
+import { Route, Routes } from 'react-router-dom';
+import { SearchPage } from './Components/SearchPage';
+import { Dashboard } from './Components/Dashboard';
+import { Footer } from './Components/Footer';
 
 function App() {
-  const [currentKey, setCurrentKey] = useState(
-    routeConstantsService.Routes.viewProfile
-  );
   return (
     <>
-      <Topbar
-        currentKey={currentKey}
-        setCurrentKey={(value) => setCurrentKey(value)}>
-        <AppRoutes />
-      </Topbar>
+      <Routes>
+        <Route path='/' element={<Dashboard />} />
+        <Route path='/search' element={<SearchPage />} />
+      </Routes>
+      <Footer />
+
     </>
+
   );
 }
 
